@@ -21,8 +21,7 @@ def import_data():
     return data, df_plot
 
 data, df_plot = import_data()
-print(data.columns.tolist())
-print('major_categories' in data.columns)
+
 # select the necessary columns
 job_amount = data[['major_categories', 'loan_amnt']]
 
