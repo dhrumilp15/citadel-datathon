@@ -2,13 +2,11 @@ from __future__ import print_function
 
 import io
 
-import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
-import os
+from google.oauth2 import service_account
 import streamlit as st
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = st.secrets['creds']
 
 def download_file(real_file_id):
     """Downloads a file
@@ -20,7 +18,14 @@ def download_file(real_file_id):
     TODO(developer) - See https://developers.google.com/identity
     for guides on implementing OAuth2 for the application.
     """
-    creds, _ = google.auth.default()
+    # dcreds, _ = google.auth.default()
+    creds = service_account.Credentials.from_service_account_info(
+        st.secrets["creds"],
+        scopes=[
+            "https://www.googleapis.com/auth/drive",
+        ],
+    )
+
     try:
         # create gmail api client
         service = build('drive', 'v3', credentials=creds)

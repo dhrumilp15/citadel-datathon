@@ -6,7 +6,7 @@ st.title("An analysis of the Effects of Financial Climate on Lending Club Loans"
 st.markdown('''
 - Geographical Analysis: An analysis of loans by zip code
 - Sentiment Analysis: Capturing market sentiment using several models for sentiment analysis
-- Histograms: Analyzing correlations between employment and loan applications
+- Employment Analysis: Analyzing correlations between employment and loan applications
 ''')
 # insert the gh readme here
 
@@ -18,7 +18,6 @@ file_ids = [
     '1wRe4v5p9B6UbYJkclHcvlkh5g4AR24lk',
     '13gBGdMSDBGx6BefbW_DcWwokhK_7UZVY',
     '1kkb3hi7YyYJLfvj0Aw-Xqj1ZaNAl8_Zr',
-    '1wRe4v5p9B6UbYJkclHcvlkh5g4AR24lk'
 ]
 
 file_urls = [
@@ -27,7 +26,6 @@ file_urls = [
     'df_cleaned_new.tsv',
     'Lending_Club_Accepted_2014_2018.csv',
     'Lending_Club_Rejected_2014_2018.csv',
-    'df_cleaned_new.tsv'
 ]
 
 with st.spinner("Downloading data"):
@@ -35,5 +33,5 @@ with st.spinner("Downloading data"):
         fp = os.path.join('data', url)
         if not os.path.exists(fp):
             file = download_file(id).decode()
-            with open(os.path.join('data', fp), 'w') as f:
+            with open(fp, 'w') as f:
                 f.write(file)
