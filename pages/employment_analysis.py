@@ -1,15 +1,24 @@
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
+import json
 
 
 @st.cache()
 def import_data():
     data = pd.read_csv('data/df_cleaned_with_fico.tsv', sep='\t', header=0)
-    return data
+    df_cleaned = pd.read_csv('data/df_cleaned_with_fico.tsv', sep='\t')
+    df_cleaned['grade_num'] = [ord(x) - 64 for x in df_cleaned.grade]
+    df_cleaned.sort_values(by='grade')
+    with open('to_name.json', 'r') as f:
+        to_name = json.load(f)
+    for key, val in to_name:
+        to_name[int(key)] = val
+    df_cleaned['minor_categories_names'] = [to_name[x] for x in df_cleaned['minor_categories']]
+    df_plot = df_cleaned[['loan_amnt', 'minor_categories', 'minor_categories_names']]
+    return data, df_plot
 
-
-data = import_data()
+data, df_plot = import_data()
 
 # select the necessary columns
 job_amount = data[['major_categories', 'loan_amnt']]
@@ -83,3 +92,7 @@ figure = go.Figure(data=[go.Sankey(
 figure.update_layout(title_text="Loan Amount Distribution by Labor Type", font_size=10)
 st.title("Employment Analysis")
 st.plotly_chart(figure)
+
+fig = df_plot.hist(column="loan_amnt", by="minor_categories_names", figsize=(50, 30), bins=40)
+
+st.pyplot(fig)
