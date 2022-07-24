@@ -35,12 +35,12 @@ analyst_means, headline_means = load_data()
 
 st.title("Sentiment Analysis")
 st.subheader("Average Monthly Sentiment of Analyst Ratings")
-show_data(analyst_means)
+with st.spinner("loading plot..."):
+    show_data(analyst_means)
 
 # st.markdown("It's worth pointing out that the distilRoBERTa-predicted sentiment has significantly more variance than the "
 #             "SpaCy-predicted sentiment")
 
 st.subheader("Average Monthly Sentiment of News Headlines")
-show_data(headline_means)
-
-import os, psutil; print(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
+with st.spinner("loading plot..."):
+    show_data(headline_means)

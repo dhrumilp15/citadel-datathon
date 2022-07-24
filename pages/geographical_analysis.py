@@ -38,13 +38,15 @@ import json
 # map_plot.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
 st.title("Geographical Analysis")
 st.header("Volume of Loan Applications by Zip Code")
-st.image('pages/geo_plot_1.png')
+with st.spinner("loading plot..."):
+    st.image('pages/geo_plot_1.png')
 # st.plotly_chart(map_plot)
 
 # find average interest rate by zip
 
 st.header("Average Interest Rate by Zip Code")
-st.image('pages/geo_plot_2.png')
+with st.spinner("loading plot..."):
+    st.image('pages/geo_plot_2.png')
 # zip_int = accepted_df[['zip_code', 'int_rate']]
 # zip_int = zip_int.groupby(['zip_code'])['int_rate'].mean().reset_index()
 #
