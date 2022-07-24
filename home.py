@@ -36,3 +36,5 @@ with st.spinner("Downloading data"):
             file = download_file(id).decode()
             with open(fp, 'w') as f:
                 f.write(file)
+
+import os, psutil; print(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)

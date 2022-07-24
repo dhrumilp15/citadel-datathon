@@ -101,3 +101,5 @@ fig, ax = plt.subplots(figsize=(50, 60))
 first_50 = df_plot[df_plot['minor_categories'] <= 50]
 ax = first_50.hist(column="loan_amnt", by="minor_categories_names",  bins=40, ax=ax)
 st.pyplot(fig)
+
+import os, psutil; print(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)

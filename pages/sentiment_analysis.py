@@ -42,3 +42,5 @@ show_data(analyst_means)
 
 st.subheader("Average Monthly Sentiment of News Headlines")
 show_data(headline_means)
+
+import os, psutil; print(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)

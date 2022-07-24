@@ -65,3 +65,5 @@ fig_map = px.choropleth(
 
 fig_map.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
 st.plotly_chart(fig_map)
+
+import os, psutil; print(psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2)
