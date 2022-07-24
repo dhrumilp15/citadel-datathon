@@ -99,7 +99,8 @@ with st.spinner("loading plot..."):
 
 st.subheader("Loan Amount by Profession")
 with st.spinner("loading plot..."):
-    fig, ax = plt.subplots(figsize=(50, 60))
-    first_50 = df_plot[df_plot['minor_categories'] <= 50]
-    ax = first_50.hist(column="loan_amnt", by="minor_categories_names",  bins=40, ax=ax)
-    st.pyplot(fig)
+    st.image('pages/employment_image_2.png')
+    # fig, ax = plt.subplots(figsize=(50, 60))
+    # first_50 = df_plot[df_plot['minor_categories'] <= 50]
+    # ax = first_50.hist(column="loan_amnt", by="minor_categories_names",  bins=40, ax=ax)
+    # st.pyplot(fig)

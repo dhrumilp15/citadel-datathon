@@ -36,11 +36,13 @@ analyst_means, headline_means = load_data()
 st.title("Sentiment Analysis")
 st.subheader("Average Monthly Sentiment of Analyst Ratings")
 with st.spinner("loading plot..."):
-    show_data(analyst_means)
+    st.image('pages/sentiment_image_1.png')
+    # show_data(analyst_means)
 
 # st.markdown("It's worth pointing out that the distilRoBERTa-predicted sentiment has significantly more variance than the "
 #             "SpaCy-predicted sentiment")
 
 st.subheader("Average Monthly Sentiment of News Headlines")
 with st.spinner("loading plot..."):
-    show_data(headline_means)
+    st.image('pages/sentiment_image_2.png')
+    # show_data(headline_means)
