@@ -6,9 +6,9 @@ import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
-
-import requests
+import os
 import streamlit as st
+# os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = st.secrets['creds']
 
 def download_file(real_file_id):
     """Downloads a file

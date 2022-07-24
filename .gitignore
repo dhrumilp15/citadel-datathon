@@ -131,7 +131,7 @@ dmypy.json
 .idea
 .vscode
 data/
-creds.json
+.streamlit/creds.json
 credentials.json
 token.json
 citadel-datathon-357318-bb7c2522acfc.json
