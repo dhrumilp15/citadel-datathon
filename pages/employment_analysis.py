@@ -91,14 +91,13 @@ figure = go.Figure(data=[go.Sankey(
       value=value
   ))])
 
-figure.update_layout(title_text="Loan Amount Distribution by Labor Type", font_size=10)
+# figure.update_layout(title_text="", font_size=10)
 st.title("Employment Analysis")
+st.subheader("Loan Amount Distribution by Labor Type")
 st.plotly_chart(figure)
 
-fig, ax = plt.subplots()
-
+st.subheader("Loan Amount by Profession")
+fig, ax = plt.subplots(figsize=(50, 60))
 first_50 = df_plot[df_plot['minor_categories'] <= 50]
-
-ax = first_50.hist(column="loan_amnt", by="minor_categories_names", figsize=(50, 30), bins=40)
-
+ax = first_50.hist(column="loan_amnt", by="minor_categories_names",  bins=40, ax=ax)
 st.pyplot(fig)
