@@ -1,58 +1,85 @@
 import pandas as pd
 import streamlit as st
+import plotly.graph_objects as go
 
 
 @st.cache()
 def import_data():
-    accepted_df = pd.read_csv('Lending_Club_Accepted_2014_2018.csv')
-    rejected_df = pd.read_csv('Lending_Club_Rejected_2014_2018.csv')
-    return accepted_df
+    data = pd.read_csv('data/df_cleaned_with_fico.tsv', sep='\t', header=0)
+    return data
 
 
-# Explain why titles in histograms are repeated twice
-'''
-'''
+data = import_data()
 
-accepted_df = import_data()
+# select the necessary columns
+job_amount = data[['major_categories', 'loan_amnt']]
 
-# plot 1: volume of loan applications by zip
+# drop major_categories = 0, where the model was not able to identify the category
+job_amount.drop(job_amount[job_amount['major_categories'] == 0].index, inplace=True)
 
-# take the zip codes only and count the no. of times they occur
-volume = accepted_df['zip_code'].value_counts()
+# subtract 1 from every value in major_categories to match the sankey representation
+job_amount['major_categories'] = job_amount['major_categories'] - 1
 
-# plot the data
-fig = px.choropleth(
-    data_frame=volume,
-    geojson=zip3_regions,
-    locations=volume.index,
-    featureidkey='properties.ZIP',
-    color=volume.values,
-    color_continuous_scale='Viridis',
-    range_color=(0, 20000),
-    scope='usa',
-    labels={'count': 'loan acceptances'}
-)
+# document the labels with their index (for clarity only)
+labels_index = {
+    'Managers': 0,
+    'Professionals': 1,
+    'Technicial and Associate Professionals': 2,
+    'Clerical Support Workers': 3,
+    'Service/Sale Workers and Customer Service': 4,
+    'Craft and Related Trade Workers': 5,
+    'Plant/Machine Operators and Assemblers': 6,
+    'Elementary Occupations': 7,
+    'Armed Forces and Corrections/Police/Security Occupations': 8,
+    'Loan Amount Above Median': 9,
+    'Loan Amount Below Median': 10
+}
 
-fig.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
-st.plotly_chart(fig)
+labels = list(labels_index.keys())
 
-# find average interest rate by zip
-zip_int = accepted_df[['zip_code', 'int_rate']]
+# create the lists to be used in the sankey diagram
 
-zip_int = zip_int.groupby(['zip_code'])['int_rate'].mean().reset_index()
+# source: add two values of each labor category, one will connect to loan_amount > median and the other for loan_amount <= median
+source = [x for x in range(9)] * 2
+source.sort()
 
-# plot the data
-fig = px.choropleth(
-    data_frame=zip_int,
-    geojson=zip3_regions,
-    locations=zip_int.zip_code,
-    featureidkey='properties.ZIP',
-    color=zip_int.int_rate,
-    color_continuous_scale='Viridis',
-    range_color=(6, 21),
-    scope='usa',
-    labels={'count':'loan acceptances'}
-)
+# let 9 represent loan_amount > median, 10 represent loan_amount <= median
+# since there are two flows from each labor category, and their indexes are assigned sequentially
+target = [9, 10] * 9
 
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-st.plotly_chart(fig)
+# for each labor category, find the number of columns with for > and <= and append them to create the width of each flow
+value = []
+MEDIAN = 13500
+
+for category in range(9):
+    # select all records with this labor category
+    loans_in_category = job_amount[job_amount['major_categories'] == category]
+
+    # from all the loans of this category, find the number of loans above the median
+    loans_above_median = loans_in_category[loans_in_category['loan_amnt'] > MEDIAN]
+
+    # calculate and append the values
+    total = len(loans_in_category)
+    above = len(loans_above_median)
+    below = total - above
+
+    value.append(above)
+    value.append(below)
+
+figure = go.Figure(data=[go.Sankey(
+    node=dict(
+      pad=15,
+      thickness=20,
+      line=dict(color="black", width = 0.5),
+      label=labels,
+      #color = "blue"
+    ),
+    link=dict(
+      source=source,
+      target=target,
+      value=value
+  ))])
+
+figure.update_layout(title_text="Loan Amount Distribution by Labor Type", font_size=10)
+st.title("Employment Analysis")
+st.plotly_chart(figure)
