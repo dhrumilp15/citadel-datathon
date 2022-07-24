@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 @st.cache()
 def import_data():
     data = pd.read_csv('data/df_cleaned_new.tsv', sep='\t', header=0)
-    df_cleaned = pd.read_csv('data/df_cleaned_new.tsv', sep='\t')
+    df_cleaned = pd.read_csv('data/df_cleaned_with_fico.tsv', sep='\t')
     df_cleaned['grade_num'] = [ord(x) - 64 for x in df_cleaned.grade]
     df_cleaned.sort_values(by='grade')
     with open('pages/to_name.json', 'r') as f:

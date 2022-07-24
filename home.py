@@ -17,6 +17,7 @@ file_ids = [
     '1Az_BSkNInzeNRs7sUsHCaP_sN-yc8cxC',
     '1wRe4v5p9B6UbYJkclHcvlkh5g4AR24lk',
     '1BM5kneFsg6dqNXNxfqXWwGFlvlseWzoq',
+    '1jncMPsQBRG6xnlqfHZJoPiL_ITe_VlWj'
 ]
 
 file_urls = [
@@ -24,6 +25,7 @@ file_urls = [
     'partner_headlines_monthly_avg_sentiment.csv',
     'df_cleaned_new.tsv',
     'Lending_Club_Accepted_2014_2018.csv',
+    'df_cleaned_with_fico.tsv'
 ]
 
 with st.spinner("Downloading data"):

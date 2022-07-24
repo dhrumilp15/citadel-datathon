@@ -27,7 +27,7 @@ accepted_df, zip3_regions = import_data()
 volume = accepted_df['zip_code'].value_counts()
 
 # plot the data
-ax = px.choropleth(
+map_plot = px.choropleth(
     data_frame=volume,
     geojson=zip3_regions,
     locations=volume.index,
@@ -39,9 +39,9 @@ ax = px.choropleth(
     labels={'count': 'loan acceptances'}
 )
 
-ax.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
+map_plot.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
 
-st.plotly_chart(ax)
+st.plotly_chart(map_plot)
 
 # find average interest rate by zip
 
@@ -51,7 +51,7 @@ zip_int = accepted_df[['zip_code', 'int_rate']]
 zip_int = zip_int.groupby(['zip_code'])['int_rate'].mean().reset_index()
 
 # plot the data
-fig = px.choropleth(
+fig_map = px.choropleth(
     data_frame=zip_int,
     geojson=zip3_regions,
     locations=zip_int.zip_code,
@@ -63,5 +63,5 @@ fig = px.choropleth(
     labels={'count': 'loan acceptances'}
 )
 
-fig.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
-st.plotly_chart(fig)
+fig_map.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
+st.plotly_chart(fig_map)
