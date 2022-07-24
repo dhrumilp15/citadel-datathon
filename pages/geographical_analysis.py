@@ -27,7 +27,7 @@ accepted_df, zip3_regions = import_data()
 volume = accepted_df['zip_code'].value_counts()
 
 # plot the data
-fig = px.choropleth(
+ax = px.choropleth(
     data_frame=volume,
     geojson=zip3_regions,
     locations=volume.index,
@@ -39,15 +39,15 @@ fig = px.choropleth(
     labels={'count': 'loan acceptances'}
 )
 
-fig.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
-st.plotly_chart(fig)
+ax.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
+
+st.plotly_chart(ax)
 
 # find average interest rate by zip
 
 st.header("Average Interest Rate by Zip Code")
 
 zip_int = accepted_df[['zip_code', 'int_rate']]
-
 zip_int = zip_int.groupby(['zip_code'])['int_rate'].mean().reset_index()
 
 # plot the data
@@ -60,10 +60,8 @@ fig = px.choropleth(
     color_continuous_scale='Viridis',
     range_color=(6, 21),
     scope='usa',
-    labels={'count':'loan acceptances'}
+    labels={'count': 'loan acceptances'}
 )
 
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+fig.update_layout(margin={"r": 0,"t": 0,"l": 0,"b": 0})
 st.plotly_chart(fig)
-
-# Loan amount and occupation type => Sankey
