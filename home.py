@@ -16,15 +16,15 @@ file_ids = [
     '1--mpdq14luzIlPG8W5W3ESxV9P1xw8W-',
     '1Az_BSkNInzeNRs7sUsHCaP_sN-yc8cxC',
     '1wRe4v5p9B6UbYJkclHcvlkh5g4AR24lk',
-    '1BM5kneFsg6dqNXNxfqXWwGFlvlseWzoq',
+    # '1BM5kneFsg6dqNXNxfqXWwGFlvlseWzoq',
     '1jncMPsQBRG6xnlqfHZJoPiL_ITe_VlWj'
 ]
 
 file_urls = [
-    'analyst_ratings_monthly_avg_sentiment.csv',
-    'partner_headlines_monthly_avg_sentiment.csv',
+    # 'analyst_ratings_monthly_avg_sentiment.csv',
+    # 'partner_headlines_monthly_avg_sentiment.csv',
     'df_cleaned_new.tsv',
-    'Lending_Club_Accepted_2014_2018.csv',
+    # 'Lending_Club_Accepted_2014_2018.csv',
     'df_cleaned_with_fico.tsv'
 ]
 

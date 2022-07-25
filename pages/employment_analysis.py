@@ -98,9 +98,16 @@ with st.spinner("loading plot..."):
     st.plotly_chart(figure)
 
 st.subheader("Loan Amount by Profession")
+unique_profs = df_plot.minor_categories_names.unique().tolist()
+choices = st.multiselect("Choose professions", unique_profs)
 with st.spinner("loading plot..."):
-    st.image('pages/employment_image_2.png')
-    # fig, ax = plt.subplots(figsize=(50, 60))
-    # first_50 = df_plot[df_plot['minor_categories'] <= 50]
-    # ax = first_50.hist(column="loan_amnt", by="minor_categories_names",  bins=40, ax=ax)
-    # st.pyplot(fig)
+    # st.image('pages/employment_image_2.png')
+    loans = df_plot.groupby('minor_categories_names')
+    for choice in choices:
+        prof = loans.get_group(choice)
+        fig, ax = plt.subplots(nrows=1, ncols=1)
+        prof.hist(column="loan_amnt", bins=40, ax=ax)
+        plt.ylabel("Count")
+        plt.title(f"Loan Amounts for {prof.minor_categories_names.iloc[0]}")
+        plt.xlabel("Amount ($)")
+        st.pyplot(fig)
